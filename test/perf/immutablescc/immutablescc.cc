@@ -276,6 +276,17 @@ void test_alloc_freeze_release(std::string ds, Make make, bool print)
                       << (double)m.get_time().count() / work << std::endl;
         }
 
+        {
+          MeasureTime m(true);
+          for (auto root : roots)
+          {
+            RegionTrace::gc(alloc, root);
+          }
+          if (print)
+            std::cout << ds << ",Trace," << list_size << ","
+                      << (double)m.get_time().count() / work << std::endl;
+        }
+
         verona::rt::Object::reset_find_count();
         {
           MeasureTime m(true);
